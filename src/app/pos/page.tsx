@@ -153,7 +153,7 @@ export default function POSPage() {
             className={`whitespace-nowrap rounded-full px-5 py-2 text-sm font-semibold transition ${
               selectedCategory === null
                 ? "bg-orange-600 text-white shadow-md"
-                : "bg-white text-gray-600 hover:bg-gray-50"
+                : "bg-white text-black hover:bg-gray-50"
             }`}
           >
             Tất cả
@@ -165,7 +165,7 @@ export default function POSPage() {
               className={`whitespace-nowrap rounded-full px-5 py-2 text-sm font-semibold transition ${
                 selectedCategory === cat.id
                   ? "bg-orange-600 text-white shadow-md"
-                  : "bg-white text-gray-600 hover:bg-gray-50"
+                  : "bg-white text-black hover:bg-gray-50"
               }`}
             >
               {cat.name}
@@ -179,16 +179,24 @@ export default function POSPage() {
             <button
               key={prod.id}
               onClick={() => openItemModal(prod)}
-              className="flex h-[200px] flex-col rounded-xl bg-white p-3 text-left shadow-sm transition hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+              className="flex h-[260px] flex-col rounded-xl bg-white p-3 text-left shadow-sm transition hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] text-black"
             >
-              <div className="aspect-video w-full rounded-lg bg-orange-50 mb-3 flex items-center justify-center text-orange-200">
-                <svg
-                  className="w-12 h-12"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M2 21h18v-2H2v2zM20 8h-2V5h2v3zm2-3h-4V2h4v3zm0 11h-4v-1h4v1zm-6-7V2l-4 4l4 4V7c3.31 0 6 2.69 6 6s-2.69 6-6 6s-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8s-3.58-8-8-8z" />
-                </svg>
+              <div className="aspect-video w-full rounded-lg bg-orange-50 mb-3 flex items-center justify-center text-orange-200 overflow-hidden">
+                {prod.image ? (
+                  <img
+                    src={prod.image}
+                    alt={prod.name}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <svg
+                    className="w-12 h-12"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M2 21h18v-2H2v2zM20 8h-2V5h2v3zm2-3h-4V2h4v3zm0 11h-4v-1h4v1zm-6-7V2l-4 4l4 4V7c3.31 0 6 2.69 6 6s-2.69 6-6 6s-6-2.69-6-6h-2c0 4.42 3.58 8 8 8s8-3.58 8-8s-3.58-8-8-8z" />
+                  </svg>
+                )}
               </div>
               <h3 className="font-bold text-gray-800 line-clamp-2 leading-tight flex-1">
                 {prod.name}
@@ -202,7 +210,7 @@ export default function POSPage() {
       </div>
 
       {/* Cart / Sidebar */}
-      <div className="w-[400px] bg-white shadow-2xl flex flex-col">
+      <div className="w-[400px] bg-white shadow-2xl flex flex-col text-black">
         <div className="p-4 border-b bg-gray-50 flex justify-between items-center">
           <div className="flex flex-col">
             <h2 className="text-xl font-black text-gray-900 leading-tight">
@@ -254,7 +262,7 @@ export default function POSPage() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white text-black">
           {cart.map((item, index) => (
             <div
               key={index}
@@ -355,7 +363,7 @@ export default function POSPage() {
       {/* Item Selection Modal */}
       {showItemModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-black">
             <div className="p-6 border-b flex justify-between items-center bg-orange-50">
               <h2 className="text-2xl font-black text-gray-900">
                 {currentProduct.name}

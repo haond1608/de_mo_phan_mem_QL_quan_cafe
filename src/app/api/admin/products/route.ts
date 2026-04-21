@@ -10,52 +10,59 @@ export async function GET() {
   }
 
   const db = await getDb();
-  const products = await db.collection("Product").aggregate([
-    {
-      $lookup: {
-        from: "Category",
-        localField: "categoryIDs",
-        foreignField: "_id",
-        as: "categories"
-      }
-    },
-    {
-      $lookup: {
-        from: "Size",
-        localField: "_id",
-        foreignField: "productId",
-        as: "sizes"
-      }
-    },
-    {
-      $project: {
-        id: { $toString: "$_id" },
-        name: 1,
-        description: 1,
-        image: 1,
-        basePrice: 1,
-        status: 1,
-        categoryIDs: 1,
-        createdAt: 1,
-        updatedAt: 1,
-        categories: {
-          $map: {
-            input: "$categories",
-            as: "cat",
-            in: { id: { $toString: "$$cat._id" }, name: "$$cat.name" }
-          }
+  const products = await db
+    .collection("Product")
+    .aggregate([
+      {
+        $lookup: {
+          from: "Category",
+          localField: "categoryIDs",
+          foreignField: "_id",
+          as: "categories",
         },
-        sizes: {
-          $map: {
-            input: "$sizes",
-            as: "size",
-            in: { id: { $toString: "$$size._id" }, name: "$$size.name", price: "$$size.price" }
-          }
-        }
-      }
-    },
-    { $sort: { createdAt: -1 } }
-  ]).toArray();
+      },
+      {
+        $lookup: {
+          from: "Size",
+          localField: "_id",
+          foreignField: "productId",
+          as: "sizes",
+        },
+      },
+      {
+        $project: {
+          id: { $toString: "$_id" },
+          name: 1,
+          description: 1,
+          image: 1,
+          basePrice: 1,
+          status: 1,
+          categoryIDs: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          categories: {
+            $map: {
+              input: "$categories",
+              as: "cat",
+              in: { id: { $toString: "$$cat._id" }, name: "$$cat.name" },
+            },
+          },
+          sizes: {
+            $map: {
+              input: "$sizes",
+              as: "size",
+              in: {
+                id: { $toString: "$$size._id" },
+                name: "$$size.name",
+                price: "$$size.price",
+              },
+            },
+          },
+        },
+      },
+      { $sort: { createdAt: -1 } },
+    ])
+    .toArray();
 
   return NextResponse.json(products);
 }
@@ -67,15 +74,21 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { name, description, basePrice, categoryId, sizes } = body;
+  const { name, description, basePrice, categoryId, sizes, image } = body;
 
   if (!name || basePrice === undefined || !categoryId) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing required fields" },
+      { status: 400 },
+    );
   }
 
   const parsedPrice = parseFloat(basePrice);
   if (parsedPrice <= 0) {
-    return NextResponse.json({ error: "Price must be greater than 0" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Price must be greater than 0" },
+      { status: 400 },
+    );
   }
 
   if (!ObjectId.isValid(categoryId)) {
@@ -88,6 +101,7 @@ export async function POST(request: Request) {
     const productInsert = await db.collection("Product").insertOne({
       name,
       description,
+      image: image || null,
       basePrice: parsedPrice,
       categoryIDs: [new ObjectId(categoryId as string)],
       status: "AVAILABLE",
@@ -103,15 +117,17 @@ export async function POST(request: Request) {
           name: s.name,
           price: parseFloat(s.price),
           productId: productId,
-        }))
+        })),
       );
     }
 
     // Update Category with new product ID
-    await db.collection("Category").updateOne(
-      { _id: new ObjectId(categoryId as string) },
-      { $addToSet: { productIDs: productId } }
-    );
+    await db
+      .collection("Category")
+      .updateOne(
+        { _id: new ObjectId(categoryId as string) },
+        { $addToSet: { productIDs: productId } },
+      );
 
     const product = {
       id: productId.toString(),
@@ -133,7 +149,10 @@ export async function POST(request: Request) {
     return NextResponse.json(product);
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -144,7 +163,16 @@ export async function PUT(request: Request) {
   }
 
   const body = await request.json();
-  const { id, name, description, basePrice, categoryIDs, status, sizes } = body;
+  const {
+    id,
+    name,
+    description,
+    basePrice,
+    categoryIDs,
+    status,
+    sizes,
+    image,
+  } = body;
 
   if (!id || !ObjectId.isValid(id)) {
     return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
@@ -152,7 +180,10 @@ export async function PUT(request: Request) {
 
   const parsedPrice = parseFloat(basePrice);
   if (parsedPrice !== undefined && parsedPrice <= 0) {
-    return NextResponse.json({ error: "Price must be greater than 0" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Price must be greater than 0" },
+      { status: 400 },
+    );
   }
 
   const db = await getDb();
@@ -161,15 +192,21 @@ export async function PUT(request: Request) {
     const updateData: any = { updatedAt: now };
     if (name) updateData.name = name;
     if (description !== undefined) updateData.description = description;
+    if (image !== undefined) updateData.image = image;
     if (parsedPrice !== undefined) updateData.basePrice = parsedPrice;
     if (status) updateData.status = status;
-    if (categoryIDs) updateData.categoryIDs = categoryIDs.map((cid: string) => new ObjectId(cid));
+    if (categoryIDs)
+      updateData.categoryIDs = categoryIDs.map(
+        (cid: string) => new ObjectId(cid),
+      );
 
-    const result = await db.collection("Product").findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { $set: updateData },
-      { returnDocument: "after" }
-    );
+    const result = await db
+      .collection("Product")
+      .findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        { $set: updateData },
+        { returnDocument: "after" },
+      );
 
     if (!result) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
@@ -184,7 +221,7 @@ export async function PUT(request: Request) {
             name: s.name,
             price: parseFloat(s.price),
             productId: new ObjectId(id),
-          }))
+          })),
         );
       }
     }
@@ -199,7 +236,10 @@ export async function PUT(request: Request) {
 
     return NextResponse.json({ ...result, id: result._id.toString() });
   } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -219,29 +259,35 @@ export async function DELETE(request: Request) {
   const db = await getDb();
   try {
     // BR02: Check if product is in any unpaid order
-    const unpaidOrderCount = await db.collection("Order").aggregate([
-      { $match: { status: "PENDING" } },
-      {
-        $lookup: {
-          from: "OrderItem",
-          localField: "_id",
-          foreignField: "orderId",
-          as: "items"
-        }
-      },
-      { $match: { "items.productId": new ObjectId(id) } },
-      { $count: "count" }
-    ]).toArray();
+    const unpaidOrderCount = await db
+      .collection("Order")
+      .aggregate([
+        { $match: { status: "PENDING" } },
+        {
+          $lookup: {
+            from: "OrderItem",
+            localField: "_id",
+            foreignField: "orderId",
+            as: "items",
+          },
+        },
+        { $match: { "items.productId": new ObjectId(id) } },
+        { $count: "count" },
+      ])
+      .toArray();
 
     if (unpaidOrderCount.length > 0 && unpaidOrderCount[0].count > 0) {
       return NextResponse.json(
-        { error: "Cannot delete product that exists in an unpaid order. Try disabling it instead." },
-        { status: 400 }
+        {
+          error:
+            "Cannot delete product that exists in an unpaid order. Try disabling it instead.",
+        },
+        { status: 400 },
       );
     }
 
     const result = await db.collection("Product").findOneAndDelete({
-      _id: new ObjectId(id)
+      _id: new ObjectId(id),
     });
 
     if (!result) {
@@ -256,11 +302,14 @@ export async function DELETE(request: Request) {
       action: "DELETE_PRODUCT",
       target: `Product:${id}`,
       dataBefore: JSON.stringify(result),
-      timestamp: new Date()
+      timestamp: new Date(),
     });
 
     return NextResponse.json({ message: "Product deleted" });
   } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

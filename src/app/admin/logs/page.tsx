@@ -27,8 +27,10 @@ export default function LogsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-800">Nhật ký Hệ thống (Audit Logs)</h1>
-        <button 
+        <h1 className="text-3xl font-bold text-gray-800">
+          Nhật ký Hệ thống (Audit Logs)
+        </h1>
+        <button
           onClick={fetchLogs}
           className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-bold text-gray-600 hover:bg-gray-200 transition"
         >
@@ -36,7 +38,7 @@ export default function LogsPage() {
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100">
+      <div className="overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100 text-black">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-100 text-sm font-bold text-gray-500 uppercase tracking-wider">
             <tr>
@@ -54,17 +56,26 @@ export default function LogsPage() {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-col">
-                    <span className="font-bold text-gray-900">{log.user.name}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest">{log.user.username}</span>
+                    <span className="font-bold text-gray-900">
+                      {log.user.name}
+                    </span>
+                    <span className="text-[10px] text-gray-400 uppercase tracking-widest">
+                      {log.user.username}
+                    </span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-tighter ${
-                    log.action.includes("DELETE") ? "bg-red-100 text-red-700" :
-                    log.action.includes("CREATE") ? "bg-green-100 text-green-700" :
-                    log.action.includes("PAY") ? "bg-blue-100 text-blue-700" :
-                    "bg-orange-100 text-orange-700"
-                  }`}>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-tighter ${
+                      log.action.includes("DELETE")
+                        ? "bg-red-100 text-red-700"
+                        : log.action.includes("CREATE")
+                          ? "bg-green-100 text-green-700"
+                          : log.action.includes("PAY")
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-orange-100 text-orange-700"
+                    }`}
+                  >
                     {log.action}
                   </span>
                 </td>
@@ -77,7 +88,10 @@ export default function LogsPage() {
             ))}
             {logs.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-6 py-10 text-center text-gray-400 italic">
+                <td
+                  colSpan={4}
+                  className="px-6 py-10 text-center text-gray-400 italic"
+                >
                   Chưa có nhật ký thao tác nào.
                 </td>
               </tr>
