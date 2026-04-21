@@ -1,6 +1,11 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
+Cài đặt thư viện (nếu chưa làm):
+npm install
+
+Nạp dữ liệu mẫu (Quan trọng: Để có tài khoản đăng nhập và menu ban đầu):
+npm run seed
 
 First, run the development server:
 
@@ -13,6 +18,13 @@ pnpm dev
 # or
 bun dev
 ```
+Đăng nhập quyền Quản lý (Admin)
+- Username : admin
+- Password : admin123
+
+Đăng nhập quyền Nhân viên (Staff)
+- Username : staff
+- Password : staff123
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
