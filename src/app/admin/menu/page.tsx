@@ -448,8 +448,7 @@ export default function MenuManagementPage() {
                 </>
               )}
 
-              {(modalType === "topping" || modalType === "product") &&
-                modalType !== "category" && (
+              {(modalType === "topping" || modalType === "product") && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Giá {modalType === "topping" ? "" : "(Size M)"}

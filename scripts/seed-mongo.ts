@@ -74,7 +74,7 @@ async function main() {
         name: "Cà phê đen",
         basePrice: 25000,
         category: "Cà phê",
-        image: "/img/1776762312633.jpg",
+        image: "/ca-phe-den.jpg",
         sizes: [
           { name: "S", price: 25000 },
           { name: "M", price: 30000 },
@@ -85,7 +85,7 @@ async function main() {
         name: "Cà phê sữa đá",
         basePrice: 29000,
         category: "Cà phê",
-        image: "/img/ca-phe-sua-da.jpg",
+        image: "/ca-phe-sua-da.jpg",
         sizes: [
           { name: "S", price: 29000 },
           { name: "M", price: 34000 },
@@ -96,7 +96,7 @@ async function main() {
         name: "Latte",
         basePrice: 45000,
         category: "Cà phê",
-        image: "/img/latte.jpg",
+        image: "/latte.jpg",
         sizes: [
           { name: "S", price: 45000 },
           { name: "M", price: 50000 },
@@ -107,7 +107,7 @@ async function main() {
         name: "Cappuccino",
         basePrice: 45000,
         category: "Cà phê",
-        image: "/img/cappuccino.jpg",
+        image: "/cappuccino.jpg",
         sizes: [
           { name: "S", price: 45000 },
           { name: "M", price: 50000 },
@@ -118,7 +118,7 @@ async function main() {
         name: "Mocha",
         basePrice: 50000,
         category: "Cà phê",
-        image: "/img/mocha.jpg",
+        image: "/mocha.jpg",
         sizes: [
           { name: "S", price: 50000 },
           { name: "M", price: 55000 },
@@ -129,7 +129,7 @@ async function main() {
         name: "Espresso",
         basePrice: 30000,
         category: "Cà phê",
-        image: "/img/espresso.jpg",
+        image: "/espresso.jpg",
         sizes: [
           { name: "S", price: 30000 },
           { name: "M", price: 35000 },
@@ -140,7 +140,7 @@ async function main() {
         name: "Trà đào",
         basePrice: 35000,
         category: "Trà",
-        image: "/img/tra-dao.jpg",
+        image: "/tra-dao.jpg",
         sizes: [
           { name: "M", price: 35000 },
           { name: "L", price: 40000 },
@@ -150,7 +150,7 @@ async function main() {
         name: "Trà vải",
         basePrice: 35000,
         category: "Trà",
-        image: "/img/tra-vai.jpg",
+        image: "/tra-vai.jpg",
         sizes: [
           { name: "M", price: 35000 },
           { name: "L", price: 40000 },
@@ -160,7 +160,7 @@ async function main() {
         name: "Trà xanh",
         basePrice: 30000,
         category: "Trà",
-        image: "/img/tra-xanh.jpg",
+        image: "/tra-xanh.jpg",
         sizes: [
           { name: "M", price: 30000 },
           { name: "L", price: 35000 },
@@ -170,7 +170,7 @@ async function main() {
         name: "Trà gừng",
         basePrice: 32000,
         category: "Trà",
-        image: "/img/tra-gung.jpg",
+        image: "/tra-gung.jpg",
         sizes: [
           { name: "M", price: 32000 },
           { name: "L", price: 37000 },
@@ -180,7 +180,7 @@ async function main() {
         name: "Trà chanh",
         basePrice: 28000,
         category: "Trà",
-        image: "/img/tra-chanh.jpg",
+        image: "/tra-chanh.jpg",
         sizes: [
           { name: "M", price: 28000 },
           { name: "L", price: 33000 },
@@ -191,7 +191,7 @@ async function main() {
         name: "Đá xay cà phê",
         basePrice: 40000,
         category: "Đá xay",
-        image: "/img/da-xay-ca-phe.jpg",
+        image: "/da-xay-ca-phe.jpg",
         sizes: [
           { name: "M", price: 40000 },
           { name: "L", price: 45000 },
@@ -201,7 +201,7 @@ async function main() {
         name: "Đá xay chocolate",
         basePrice: 45000,
         category: "Đá xay",
-        image: "/img/da-xay-chocolate.jpg",
+        image: "/da-xay-chocolate.jpg",
         sizes: [
           { name: "M", price: 45000 },
           { name: "L", price: 50000 },
@@ -211,7 +211,7 @@ async function main() {
         name: "Đá xay matcha",
         basePrice: 45000,
         category: "Đá xay",
-        image: "/img/da-xay-matcha.jpg",
+        image: "/da-xay-matcha.jpg",
         sizes: [
           { name: "M", price: 45000 },
           { name: "L", price: 50000 },
@@ -221,7 +221,7 @@ async function main() {
         name: "Đá xay dâu",
         basePrice: 45000,
         category: "Đá xay",
-        image: "/img/da-xay-dau.jpg",
+        image: "/da-xay-dau.jpg",
         sizes: [
           { name: "M", price: 45000 },
           { name: "L", price: 50000 },
@@ -232,7 +232,7 @@ async function main() {
         name: "Sinh tố bơ",
         basePrice: 40000,
         category: "Sinh tố",
-        image: "/img/sinh-to-bo.jpg",
+        image: "/sinh-to-bo.jpg",
         sizes: [
           { name: "M", price: 40000 },
           { name: "L", price: 45000 },
@@ -242,7 +242,7 @@ async function main() {
         name: "Sinh tố dâu",
         basePrice: 40000,
         category: "Sinh tố",
-        image: "/img/sinh-to-dau.jpg",
+        image: "/sinh-to-dau.jpg",
         sizes: [
           { name: "M", price: 40000 },
           { name: "L", price: 45000 },
@@ -252,7 +252,7 @@ async function main() {
         name: "Sinh tố chuối",
         basePrice: 35000,
         category: "Sinh tố",
-        image: "/img/sinh-to-chuoi.jpg",
+        image: "/sinh-to-chuoi.jpg",
         sizes: [
           { name: "M", price: 35000 },
           { name: "L", price: 40000 },
@@ -262,7 +262,7 @@ async function main() {
         name: "Sinh tố xoài",
         basePrice: 40000,
         category: "Sinh tố",
-        image: "/img/sinh-to-xoai.jpg",
+        image: "/sinh-to-xoai.jpg",
         sizes: [
           { name: "M", price: 40000 },
           { name: "L", price: 45000 },
@@ -273,7 +273,7 @@ async function main() {
         name: "Nước ép cam",
         basePrice: 35000,
         category: "Nước ép",
-        image: "/img/nuoc-ep-cam.jpg",
+        image: "/nuoc-ep-cam.jpg",
         sizes: [
           { name: "M", price: 35000 },
           { name: "L", price: 40000 },
@@ -283,7 +283,7 @@ async function main() {
         name: "Nước ép táo",
         basePrice: 35000,
         category: "Nước ép",
-        image: "/img/nuoc-ep-tao.jpg",
+        image: "/nuoc-ep-tao.jpg",
         sizes: [
           { name: "M", price: 35000 },
           { name: "L", price: 40000 },
@@ -293,7 +293,7 @@ async function main() {
         name: "Nước ép dưa hấu",
         basePrice: 30000,
         category: "Nước ép",
-        image: "/img/nuoc-ep-dua-hau.jpg",
+        image: "/nuoc-ep-dua-hau.jpg",
         sizes: [
           { name: "M", price: 30000 },
           { name: "L", price: 35000 },
@@ -303,7 +303,7 @@ async function main() {
         name: "Nước ép cà rốt",
         basePrice: 30000,
         category: "Nước ép",
-        image: "/img/nuoc-ep-ca-rot.jpg",
+        image: "/nuoc-ep-ca-rot.jpg",
         sizes: [
           { name: "M", price: 30000 },
           { name: "L", price: 35000 },

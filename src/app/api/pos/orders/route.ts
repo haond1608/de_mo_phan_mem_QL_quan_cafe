@@ -9,6 +9,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  let body: { items?: any[]; totalPrice?: number };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const { items, totalPrice } = body;
+
   if (!items || !Array.isArray(items) || items.length === 0) {
     return NextResponse.json(
       { error: "Order must have at least one item" },

@@ -28,6 +28,7 @@ export async function GET() {
           id: { $toString: "$_id" },
           name: 1,
           basePrice: 1,
+          image: 1,
           categoryIDs: {
             $map: {
               input: "$categoryIDs",
@@ -55,7 +56,23 @@ export async function GET() {
 
   return NextResponse.json({
     categories: categories.map((c) => ({ ...c, id: c._id.toString() })),
-    products,
+    products: products.map((p) => {
+      // Tạo slug từ tên sản phẩm cho image
+      const slug = p.name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      return {
+        ...p,
+        image: p.image
+          ? p.image.startsWith("http")
+            ? p.image
+            : `/img/${slug}.jpg`
+          : null,
+      };
+    }),
     toppings: toppings.map((t) => ({ ...t, id: t._id.toString() })),
   });
 }
